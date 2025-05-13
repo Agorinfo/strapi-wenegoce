@@ -18,6 +18,20 @@ export interface ContentArchiveContent extends Schema.Component {
   };
 }
 
+export interface ContentArchiveRessources extends Schema.Component {
+  collectionName: 'components_content_archive_ressources';
+  info: {
+    displayName: 'archiveRessources';
+    description: '';
+  };
+  attributes: {
+    text: Attribute.Blocks;
+    image: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    metas: Attribute.Component<'seo.meta'>;
+    cta: Attribute.Component<'content.call-to-action'>;
+  };
+}
+
 export interface ContentCallToAction extends Schema.Component {
   collectionName: 'components_content_call_to_actions';
   info: {
@@ -86,6 +100,17 @@ export interface ContentContentBlock extends Schema.Component {
   };
 }
 
+export interface ContentContentCard extends Schema.Component {
+  collectionName: 'components_content_content_cards';
+  info: {
+    displayName: 'contentCard';
+  };
+  attributes: {
+    title: Attribute.String;
+    text: Attribute.Blocks;
+  };
+}
+
 export interface ContentCount extends Schema.Component {
   collectionName: 'components_content_counts';
   info: {
@@ -108,6 +133,17 @@ export interface ContentDetails extends Schema.Component {
   attributes: {
     title: Attribute.String;
     detail: Attribute.Text;
+  };
+}
+
+export interface ContentExpertise extends Schema.Component {
+  collectionName: 'components_content_expertise';
+  info: {
+    displayName: 'expertise';
+  };
+  attributes: {
+    icon: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    text: Attribute.Blocks;
   };
 }
 
@@ -259,10 +295,11 @@ export interface ContentListCard extends Schema.Component {
   info: {
     displayName: 'listCard';
     icon: 'layout';
+    description: '';
   };
   attributes: {
     tag: Attribute.String;
-    color: Attribute.Enumeration<['bleu', 'bleu fonc\u00E9', 'violet']>;
+    color: Attribute.Enumeration<['bleu', 'bleu fonc\u00E9', 'vert']>;
     item: Attribute.Component<'content.list-card-item', true>;
   };
 }
@@ -468,6 +505,17 @@ export interface ContentTitleList extends Schema.Component {
   attributes: {
     title: Attribute.String;
     listItem: Attribute.Component<'content.list-item', true>;
+  };
+}
+
+export interface FaqFaqItem extends Schema.Component {
+  collectionName: 'components_faq_faq_items';
+  info: {
+    displayName: 'faqItem';
+  };
+  attributes: {
+    answer: Attribute.Text;
+    response: Attribute.Text;
   };
 }
 
@@ -813,13 +861,16 @@ declare module '@strapi/types' {
   export module Shared {
     export interface Components {
       'content.archive-content': ContentArchiveContent;
+      'content.archive-ressources': ContentArchiveRessources;
       'content.call-to-action': ContentCallToAction;
       'content.card-collection': ContentCardCollection;
       'content.card-list': ContentCardList;
       'content.cardlist-item': ContentCardlistItem;
       'content.content-block': ContentContentBlock;
+      'content.content-card': ContentContentCard;
       'content.count': ContentCount;
       'content.details': ContentDetails;
+      'content.expertise': ContentExpertise;
       'content.feature-details': ContentFeatureDetails;
       'content.feature-tags': ContentFeatureTags;
       'content.featured-card': ContentFeaturedCard;
@@ -837,6 +888,7 @@ declare module '@strapi/types' {
       'content.table': ContentTable;
       'content.testimonial-card': ContentTestimonialCard;
       'content.title-list': ContentTitleList;
+      'faq.faq-item': FaqFaqItem;
       'hero.hero-archive': HeroHeroArchive;
       'hero.hero-service': HeroHeroService;
       'hero.hero-slide': HeroHeroSlide;

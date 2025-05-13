@@ -897,6 +897,111 @@ export interface ApiActivityActivity extends Schema.CollectionType {
   };
 }
 
+export interface ApiCategorieCategorie extends Schema.CollectionType {
+  collectionName: 'categories';
+  info: {
+    singularName: 'categorie';
+    pluralName: 'categories';
+    displayName: 'Cat\u00E9gories';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    slug: Attribute.UID<'api::categorie.categorie', 'name'>;
+    ressources: Attribute.Relation<
+      'api::categorie.categorie',
+      'oneToMany',
+      'api::ressource.ressource'
+    >;
+    color: Attribute.String &
+      Attribute.CustomField<'plugin::color-picker.color'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::categorie.categorie',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::categorie.categorie',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiExpertiseExpertise extends Schema.SingleType {
+  collectionName: 'expertises';
+  info: {
+    singularName: 'expertise';
+    pluralName: 'expertises';
+    displayName: 'Expertises';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    heroContent: Attribute.Blocks;
+    expertises: Attribute.Component<'content.expertise', true>;
+    card: Attribute.Component<'content.content-card', true>;
+    cta: Attribute.Component<'content.call-to-action'>;
+    labelButton: Attribute.String;
+    url: Attribute.String;
+    background: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    teaser: Attribute.String;
+    metas: Attribute.Component<'seo.meta'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::expertise.expertise',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::expertise.expertise',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiFaqFaq extends Schema.SingleType {
+  collectionName: 'faqs';
+  info: {
+    singularName: 'faq';
+    pluralName: 'faqs';
+    displayName: 'Faqs';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    faqItems: Attribute.Component<'faq.faq-item', true>;
+    title: Attribute.String;
+    images: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
+    cta: Attribute.Component<'content.call-to-action'>;
+    content: Attribute.Blocks;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::faq.faq', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::faq.faq', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface ApiFeatureFeature extends Schema.CollectionType {
   collectionName: 'features';
   info: {
@@ -962,7 +1067,7 @@ export interface ApiFooterFooter extends Schema.SingleType {
     footerLinks: Attribute.Component<'content.title-list', true> &
       Attribute.SetMinMax<
         {
-          max: 4;
+          max: 5;
         },
         number
       >;
@@ -1010,6 +1115,7 @@ export interface ApiGlobalGlobal extends Schema.SingleType {
     archiveSolutions: Attribute.Component<'content.archive-content'>;
     archiveServices: Attribute.Component<'content.archive-content'>;
     NewsletterFormMessage: Attribute.String;
+    archiveRessources: Attribute.Component<'content.archive-ressources'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1145,6 +1251,46 @@ export interface ApiPrivacyPolicyPrivacyPolicy extends Schema.SingleType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::privacy-policy.privacy-policy',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiRessourceRessource extends Schema.CollectionType {
+  collectionName: 'ressources';
+  info: {
+    singularName: 'ressource';
+    pluralName: 'ressources';
+    displayName: 'Ressources';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    category: Attribute.Relation<
+      'api::ressource.ressource',
+      'manyToOne',
+      'api::categorie.categorie'
+    >;
+    content: Attribute.Blocks;
+    shortDescription: Attribute.Text;
+    slug: Attribute.UID<'api::ressource.ressource', 'title'>;
+    featuredImage: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::ressource.ressource',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::ressource.ressource',
       'oneToOne',
       'admin::user'
     > &
@@ -1308,6 +1454,9 @@ declare module '@strapi/types' {
       'api::about.about': ApiAboutAbout;
       'api::accueil.accueil': ApiAccueilAccueil;
       'api::activity.activity': ApiActivityActivity;
+      'api::categorie.categorie': ApiCategorieCategorie;
+      'api::expertise.expertise': ApiExpertiseExpertise;
+      'api::faq.faq': ApiFaqFaq;
       'api::feature.feature': ApiFeatureFeature;
       'api::footer.footer': ApiFooterFooter;
       'api::global.global': ApiGlobalGlobal;
@@ -1315,6 +1464,7 @@ declare module '@strapi/types' {
       'api::menu.menu': ApiMenuMenu;
       'api::module.module': ApiModuleModule;
       'api::privacy-policy.privacy-policy': ApiPrivacyPolicyPrivacyPolicy;
+      'api::ressource.ressource': ApiRessourceRessource;
       'api::rgpd.rgpd': ApiRgpdRgpd;
       'api::service.service': ApiServiceService;
       'api::solution.solution': ApiSolutionSolution;
