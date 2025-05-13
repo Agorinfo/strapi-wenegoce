@@ -1280,6 +1280,7 @@ export interface ApiRessourceRessource extends Schema.CollectionType {
     shortDescription: Attribute.Text;
     slug: Attribute.UID<'api::ressource.ressource', 'title'>;
     featuredImage: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    metas: Attribute.Component<'seo.meta'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
